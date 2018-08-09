@@ -31,6 +31,30 @@
 				-o-transform: rotate(2deg);
 				-ms-transform: rotate(2deg);
 				transform: rotate(2deg);
+
+				-webkit-transition: all 0.7s ease-in-out;
+				-moz-transition: all 0.3s ease-in-out;
+				-o-transition: all 0.3s ease-in-out;
+				transition: all 0.3s ease-in-out;
+
+				transform-origin : center 16px; /* .pin top value */
+
+				transition-delay: 0.1s;
+			}
+
+			.postIt:hover {
+				-webkit-transition: all 0.7s ease-in-out;
+				-moz-transition: all 0.3s ease-in-out;
+				-o-transition: all 0.3s ease-in-out;
+				transition: all 0.3s ease-in-out;
+
+				transform: rotate(5deg);
+				-moz-transform: rotate(5deg);
+				-webkit-transform: rotate(5deg);
+				-o-transform: rotate(5deg);
+				-ms-transform: rotate(5deg);
+
+				transition-delay: 0.1s;
 			}
 
 			.pin {
