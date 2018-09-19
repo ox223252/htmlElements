@@ -12,3 +12,10 @@ maybe you should modify the ```margin-bottom``` property of `selectedhexagon` to
 This will create a [post-it](http://creative-punch.net/2014/02/create-css3-post-it-note/) like render.
 
 ![post-it](post-it/imgs/post-it.png)
+
+## country slector:
+This will display a flag slector to change display language easily, you can modify it simply by adding new flags or removing existants.
+
+![countrySelector](countrySelector/imgs/countrySelector.html.png)
+
+It was created with the least possible Javascript, and to use HTML5 and CSS3 tricks.
