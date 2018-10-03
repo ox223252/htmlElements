@@ -25,3 +25,6 @@ This will provide a small navigation barre responsive and customisable
 
 ![large nav barre](navBarre/imgs/large.png)
 ![small nav barre](navBarre/imgs/small.png)
+
+## smoothScroller:
+This part of code will provide a smooth scrollbar on link select, with a displacement in 0.3 second.
