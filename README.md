@@ -1,8 +1,8 @@
 # html Elements
 html part of codes
 
-## color picker:
-This small code will display a color picker (found on [w3c](https://www.w3schools.com/colors/colors_picker.asp) and simplified).
+## colour picker:
+This small code will display a colour picker (found on [w3c](https://www.w3schools.com/colors/colors_picker.asp) and simplified).
 
 ![map](colorPicker/imgs/img_colormap.gif)
 
@@ -13,9 +13,15 @@ This will create a [post-it](http://creative-punch.net/2014/02/create-css3-post-
 
 ![post-it](post-it/imgs/post-it.png)
 
-## country slector:
-This will display a flag slector to change display language easily, you can modify it simply by adding new flags or removing existants.
+## country selector:
+This will display a flag selector to change display language easily, you can modify it simply by adding new flags or removing existent.
 
 ![countrySelector](countrySelector/imgs/countrySelector.html.png)
 
 It was created with the least possible Javascript, and to use HTML5 and CSS3 tricks.
+
+## nav barre:
+This will provide a small navigation barre responsive and customisable
+
+![large nav barre](navBarre/imgs/large.png)
+![small nav barre](navBarre/imgs/small.png)
