@@ -1,6 +1,11 @@
 # html Elements
 html part of codes
 
+## full example:
+An example is available for testing all, and small code for testing each elements.
+
+![map](fullExample/imgs/fullExample.png)
+
 ## colour picker:
 This small code will display a colour picker (found on [w3c](https://www.w3schools.com/colors/colors_picker.asp) and simplified).
 
