@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<style type="text/css">
+			.carousel
+			{
+				display: inline-block;
+				width:600px; /* ratio 1920/1080 * 33% */
+				height:113px;
+				overflow: hidden;
+			}
+			.carousel .player
+			{
+				display: flex;
+                max-height:100%;
+			}
+			.carousel .player img
+			{
+				display: inline-block;
+				max-width:33.33%;
+                object-fit: contain;
+                object-position: top;
+            }
+			.carousel .navBarre
+			{
+				display: flex;
+			}
+			.carousel .navBarre .arrow
+			{
+				display: inline-block;
+				width: 50%;
+				font-size: 3em;
+				position: relative;
+				top: -86px; /* .carousel height / 2 + 30px (3em)*/
+			}
+			.carousel .navBarre .left
+			{
+				text-align: left;
+			}
+			.carousel .navBarre .right
+			{
+				text-align: right;
+			}
+			.carousel .navBarre .arrow span
+			{
+				background-color: rgba(0,0,0,0.5);
+				color: rgba(255,255,255,0.5);
+				padding: 5px;
+			}
+			.carousel .navBarre .arrow span:hover
+			{
+				background-color: rgba(0,0,0,0.6);
+				color: rgba(255,255,255,0.8);
+			}
+			.carousel .navBarre .arrow span.right
+			{
+				border-top-left-radius: 80% 40%;
+				border-bottom-left-radius: 80% 40%;
+				text-align: right;
+			}
+			.carousel .navBarre .arrow span.left
+			{
+				border-top-right-radius: 80% 40%;
+				border-bottom-right-radius: 80% 40%;
+			}
+		</style>
+		<div class="carousel">
+			<div class="player">
+				<img id="imgAlpha_1" src="http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg">
+				<img id="imgAlpha_2" src="http://wallpoper.com/images/00/33/78/60/science-slayer_00337860.jpg">
+				<img id="imgAlpha_3" src="https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg">
+				<img id="imgAlpha_4" src="" style="display:none;">
+			</div>
+			<div class="navBarre">
+				<div class="arrow left"><span class="left" onclick="previousPicture();">&lt;</span></div>
+				<div class="arrow right" onclick="nextPicture();"><span class="right">&gt;</span></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var img = [];
+			img[ 0 ] = document.getElementById( 'imgAlpha_1' );
+			img[ 1 ] = document.getElementById( 'imgAlpha_2' );
+			img[ 2 ] = document.getElementById( 'imgAlpha_3' );
+			img[ 3 ] = document.getElementById( 'imgAlpha_4' );
+
+			var src = [];
+			var index = 0;
+			src.push ( "http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg" );
+			src.push ( "http://wallpoper.com/images/00/33/78/60/science-slayer_00337860.jpg" );
+			src.push ( "https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg" );
+			src.push ( "https://wallpapercave.com/wp/FSlJFYH.jpg" );
+			src.push ( "https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" );
+
+			var pictureAnimated = false;
+
+			function previousPicture()
+			{
+				if ( pictureAnimated )
+				{
+					return;
+				}
+				else
+				{
+					pictureAnimated = true;
+				}
+
+				(function ( nbFrames )
+				{
+					index = ( src.length + index - 1 ) % src.length;
+                    img[ img.length - 1 ].src = img[ img.length - 2 ].src;
+					for ( var i = 0; i < img.length; i++ )
+					{
+						img[ i ].src = src[ ( i + index ) % src.length ];
+					}
+
+					var numFrame = 0;
+					var anim = setInterval ( move, 1 );
+					img[ img.length - 1 ].style.display = "";
+
+					img[ 0 ].style.marginLeft = "-300px";
+
+					function move ( )
+					{
+						if ( numFrame++ >= nbFrames )
+						{
+							clearInterval ( anim );
+							img[ img.length - 1 ].style.display = "none";
+							img[ img.length - 1 ].src = "";
+							pictureAnimated = false;
+						}
+						else
+						{
+							img[ 0 ].style.marginLeft = (numFrame * ( img[ 0 ].width / nbFrames ) - img[ 0 ].width ) + "px";
+						}
+					}
+				})(100);
+			}
+
+			function nextPicture()
+			{
+				if ( pictureAnimated )
+				{
+					return;
+				}
+				else
+				{
+					pictureAnimated = true;
+				}
+
+				(function ( nbFrames )
+				{
+					var numFrame = 0;
+					var anim = setInterval ( move, 1 );
+					img[ img.length - 1 ].src = src[ ( index + ( img.length - 1 ) ) % src.length ];
+					img[ img.length - 1 ].style.display = "";
+
+					function move ( )
+					{
+						if ( numFrame++ >= nbFrames )
+						{
+							clearInterval ( anim );
+							index = ( index + 1 ) % src.length;
+							for ( var i = 0; i < img.length; i++ )
+							{
+								img[ i ].src = src[ ( i + index ) % src.length ];
+							}
+							img[ 0 ].style.marginLeft = 0;
+							img[ img.length - 1 ].style.display = "none";
+							img[ img.length - 1 ].src = "";
+							pictureAnimated = false;
+						}
+						else
+						{
+							img[ 0 ].style.marginLeft = (-numFrame * ( img[ 0 ].width / nbFrames ) ) + "px";
+						}
+					}
+				})(100);
+			}
+		</script>
+	</body>
+</html>

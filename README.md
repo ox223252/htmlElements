@@ -33,3 +33,8 @@ This will provide a small navigation barre responsive and customisable
 
 ## smoothScroller:
 This part of code will provide a smooth scrollbar on link select, with a displacement in 0.3 second.
+
+## carousel:
+This part of code is to create a carousel
+
+![carousel](carousel/imgs/carousel.png)
