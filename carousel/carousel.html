@@ -54,6 +54,11 @@
 			{
 				background-color: rgba(0,0,0,0.6);
 				color: rgba(255,255,255,0.8);
+				cursor: grab;
+			}
+			.carousel .navBarre .arrow span:active
+			{
+				cursor: grabbing;
 			}
 			.carousel .navBarre .arrow span.right
 			{
@@ -75,8 +80,8 @@
 				<img id="imgAlpha_4" src="" style="display:none;">
 			</div>
 			<div class="navBarre">
-				<div class="arrow left"><span class="left" onclick="previousPicture();">&lt;</span></div>
-				<div class="arrow right" onclick="nextPicture();"><span class="right">&gt;</span></div>
+				<div class="arrow left"><span class="left" onclick="previousPicture(this);">&lt;</span></div>
+				<div class="arrow right"><span class="right" onclick="nextPicture(this);">&gt;</span></div>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -96,11 +101,11 @@
 
 			var pictureAnimated = false;
 
-			function previousPicture()
+			function previousPicture ( el )
 			{
 				if ( pictureAnimated )
 				{
-					return;
+					return ( false );
 				}
 				else
 				{
@@ -122,6 +127,8 @@
 
 					img[ 0 ].style.marginLeft = "-300px";
 
+					el.style.cursor="wait";
+
 					function move ( )
 					{
 						if ( numFrame++ >= nbFrames )
@@ -130,6 +137,7 @@
 							img[ img.length - 1 ].style.display = "none";
 							img[ img.length - 1 ].src = "";
 							pictureAnimated = false;
+							el.style.cursor="";
 						}
 						else
 						{
@@ -139,11 +147,11 @@
 				})(100);
 			}
 
-			function nextPicture()
+			function nextPicture ( el )
 			{
 				if ( pictureAnimated )
 				{
-					return;
+					return ( false );
 				}
 				else
 				{
@@ -156,6 +164,8 @@
 					var anim = setInterval ( move, 1 );
 					img[ img.length - 1 ].src = src[ ( index + ( img.length - 1 ) ) % src.length ];
 					img[ img.length - 1 ].style.display = "";
+					
+					el.style.cursor="wait";
 
 					function move ( )
 					{
@@ -171,6 +181,7 @@
 							img[ img.length - 1 ].style.display = "none";
 							img[ img.length - 1 ].src = "";
 							pictureAnimated = false;
+							el.style.cursor="";
 						}
 						else
 						{
