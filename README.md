@@ -38,3 +38,9 @@ This part of code will provide a smooth scrollbar on link select, with a displac
 This part of code is to create a carousel
 
 ![carousel](carousel/imgs/carousel.png)
+
+## grid:
+This part of code provide a mecanism to feed a grid automaticly with content defined staticly without care about alignment.
+
+![large nav barre](grid/imgs/3columns.png)
+![small nav barre](grid/imgs/2columns.png)
