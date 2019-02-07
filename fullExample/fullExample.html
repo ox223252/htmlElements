@@ -5,7 +5,6 @@
 		<style type="text/css"> /* general */
 			html, body, section
 			{
-				background-color: #aaa;
 				text-align: center;
 			}
 			@font-face {
@@ -16,7 +15,6 @@
 			{
 				text-align: center;
 				box-shadow: 1px 1px 2px black ;
-				background-color: #FFF0BC;
 				width: 80%;
 				margin: auto;
 				font-family: courier, courier-new;
@@ -395,6 +393,10 @@
 				height:113px;
 				overflow: hidden;
 			}
+			.carousel img
+			{
+				width: calc( 100% / 3 );
+			}
 			.carousel .player
 			{
 				display: flex;
@@ -410,14 +412,14 @@
 			.carousel .navBarre
 			{
 				display: flex;
+				position: relative;
+				top: -86px; /* .carousel height / 2 + 30px (3em)*/
 			}
 			.carousel .navBarre .arrow
 			{
 				display: inline-block;
 				width: 50%;
 				font-size: 3em;
-				position: relative;
-				top: -86px; /* .carousel height / 2 + 30px (3em)*/
 			}
 			.carousel .navBarre .left
 			{
@@ -455,6 +457,83 @@
 				border-bottom-right-radius: 80% 40%;
 			}
 		</style>
+		<style type="text/css"> /* slider */
+			#lightSlider
+			{
+				float: right;
+			}
+
+			.switch
+			{
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 34px;
+			}
+
+			.switch input
+			{ 
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			.slider
+			{
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+
+			.slider:before
+			{
+				position: absolute;
+				content: "";
+				height: 26px;
+				width: 26px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+
+			input:checked + .slider
+			{
+				background-color: #2196F3;
+			}
+
+			input:focus + .slider
+			{
+				box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .slider:before
+			{
+				-webkit-transform: translateX(26px);
+				-ms-transform: translateX(26px);
+				transform: translateX(26px);
+			}
+
+			/* Rounded sliders */
+			.slider.round
+			{
+				border-radius: 34px;
+			}
+
+			.slider.round:before
+			{
+				border-radius: 50%;
+			}
+		</style>
+		<style id="darkLight" type="text/css"> /* dark-light */
+		</style>
 	</head>
 	<body>
 		<nav id="menu">
@@ -484,6 +563,18 @@
 
 					<input class="flagSelector" type="radio" name="langSelector" id="spain-flag" onclick="changeFlag(this.value);" value="sp">
 					<div class="flagDisplay" id="country_sp" style="top:-42px;"></div>
+				</div>
+			</div>
+			<div id="lightSlider" style="display:flex;margin-left:auto">
+				<div style="font-size: 26px;margin-right: 5px;">
+					<span class="onlyLight">Light</span>
+					<span class="onlyDark">Dark</span>
+				</div>
+				<div>
+					<label class="switch">
+						<input id="lightSelector" onchange="changeLight(this.checked);" type="checkbox">
+						<span class="slider round"></span>
+					</label>
 				</div>
 			</div>
 		</nav>
@@ -1272,6 +1363,27 @@
 					}
 				})(100);
 			}
+		</script>
+		<script type="text/javascript"> // slider
+			function changeLight ( flag )
+			{
+				if ( flag )
+				{ // light mode
+					document.getElementById ( 'darkLight' ).innerHTML = '.onlyDark{display:none;}\
+					html, body, section{background-color: #aaa;}\
+					.poems{background-color: #FFF0BC;}';
+				
+				}
+				else
+				{ // dark mode
+					document.getElementById ( 'darkLight' ).innerHTML = 'body{color: #fdf6e3;background-color: #333;}\
+						.onlyLight{display:none;}\
+						.poems{background-color: #444;}\
+						.infoText{background-color: #555;}';
+				}
+			}
+
+			changeLight(document.getElementsByTagName('lightSelector').checked);
 		</script>
 	</body>
 </html>
