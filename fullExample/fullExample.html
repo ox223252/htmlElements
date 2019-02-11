@@ -393,22 +393,17 @@
 				height:113px;
 				overflow: hidden;
 			}
-			.carousel img
-			{
-				width: calc( 100% / 3 );
-			}
 			.carousel .player
 			{
-				display: flex;
-                max-height:100%;
+				height:100%;
+				white-space: nowrap;
 			}
 			.carousel .player img
 			{
 				display: inline-block;
-				max-width:33.33%;
-                object-fit: contain;
-                object-position: top;
-            }
+				width: calc( 100% / 3 );
+				height:100%;
+			}
 			.carousel .navBarre
 			{
 				display: flex;
@@ -1137,16 +1132,10 @@
 					<area style="cursor:pointer" onmouseover='mouseOverColor("#993333")' onclick='clickColor("#993333",-20,162)' shape="poly" coords="171,180,180,184,180,195,171,199,162,195,162,184" alt="#993333">
 				</map>
 			</div>
-			<div class="carousel"> <!-- carousel -->
-				<div class="player">
-					<img id="imgAlpha_1" src="http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg">
-					<img id="imgAlpha_2" src="http://wallpoper.com/images/00/33/78/60/science-slayer_00337860.jpg">
-					<img id="imgAlpha_3" src="https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg">
-					<img id="imgAlpha_4" src="" style="display:none;">
-				</div>
+			<div id="carouselID" class="carousel"><!-- carousel -->
 				<div class="navBarre">
-					<div class="arrow left"><span class="left" onclick="previousPicture(this);">&lt;</span></div>
-					<div class="arrow right"><span class="right" onclick="nextPicture(this);">&gt;</span></div>
+					<div class="arrow left"><span class="left" onclick="carousel.previous(this);">&lt;</span></div>
+					<div class="arrow right"><span class="right" onclick="carousel.next(this);">&gt;</span></div>
 				</div>
 			</div>
 		</section>
@@ -1258,111 +1247,146 @@
 			}
 		</script>
 		<script type="text/javascript"> // carousel
-			var img = [];
-			img[ 0 ] = document.getElementById( 'imgAlpha_1' );
-			img[ 1 ] = document.getElementById( 'imgAlpha_2' );
-			img[ 2 ] = document.getElementById( 'imgAlpha_3' );
-			img[ 3 ] = document.getElementById( 'imgAlpha_4' );
-
-			var src = [];
-			var index = 0;
-			src.push ( "http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg" );
-			src.push ( "http://wallpoper.com/images/00/33/78/60/science-slayer_00337860.jpg" );
-			src.push ( "https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg" );
-			src.push ( "https://wallpapercave.com/wp/FSlJFYH.jpg" );
-			src.push ( "https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" );
-
-			var pictureAnimated = false;
-
-			function previousPicture ( el )
+			function carouselJs ( id, src, nbFrames )
 			{
-				if ( pictureAnimated )
+				this.index = 0;
+				this.annimated = false
+				this.src = [].concat( src );
+				this.nbFrames = nbFrames || 100;
+
+				let player = document.createElement( "div" );
+				player.classList.add( "player" );
+				document.getElementById( id ).prepend ( player );
+
+				console.log( this.nbFrames );
+
+				for ( let i = 0; i < 3; i++ )
 				{
-					return ( false );
-				}
-				else
-				{
-					pictureAnimated = true;
+					let img = document.createElement( "img" );
+					img.src = this.src[ i % this.src.length ];
+					player.append ( img );
 				}
 
-				(function ( nbFrames )
+				this.previous  = function ( el )
 				{
-					index = ( src.length + index - 1 ) % src.length;
-                    img[ img.length - 1 ].src = img[ img.length - 2 ].src;
-					for ( var i = 0; i < img.length; i++ )
+					if ( this.annimated )
 					{
-						img[ i ].src = src[ ( i + index ) % src.length ];
+						return ( false );
+					}
+					else
+					{
+						this.annimated = true;
 					}
 
+					// get previous index in circular buffer
+					this.index = ( this.src.length + this.index - 1 ) % this.src.length;
+
+					// get player element
+					let player = el.parentNode.parentNode.parentNode.getElementsByClassName ( "player" )[ 0 ];
+
+					// create new image
+					let img = document.createElement( "img" );
+					img.src = this.src[ this.index ];
+					img.style.marginLeft = -player.getElementsByTagName( "img" )[ 0 ].width  + "px";
+
+					player.prepend ( img );
+
 					var numFrame = 0;
-					var anim = setInterval ( move, 1 );
-					img[ img.length - 1 ].style.display = "";
+					var anim = setInterval ( move, 1, {env:this, img:img,player:player} );
 
-					img[ 0 ].style.marginLeft = "-300px";
-
-					el.style.cursor="wait";
-
-					function move ( )
+					if ( el )
 					{
-						if ( numFrame++ >= nbFrames )
-						{
-							clearInterval ( anim );
-							img[ img.length - 1 ].style.display = "none";
-							img[ img.length - 1 ].src = "";
-							pictureAnimated = false;
-							el.style.cursor="";
-						}
-						else
-						{
-							img[ 0 ].style.marginLeft = (numFrame * ( img[ 0 ].width / nbFrames ) - img[ 0 ].width ) + "px";
-						}
+						el.style.cursor="wait";
 					}
-				})(100);
-			}
 
-			function nextPicture ( el )
-			{
-				if ( pictureAnimated )
-				{
-					return ( false );
-				}
-				else
-				{
-					pictureAnimated = true;
-				}
-
-				(function ( nbFrames )
-				{
-					var numFrame = 0;
-					var anim = setInterval ( move, 1 );
-					img[ img.length - 1 ].src = src[ ( index + ( img.length - 1 ) ) % src.length ];
-					img[ img.length - 1 ].style.display = "";
-					
-					el.style.cursor="wait";
-
-					function move ( )
+					function move ( obj )
 					{
-						if ( numFrame++ >= nbFrames )
+						if ( !obj.env.nbFrames ||
+							( numFrame++ >= obj.env.nbFrames ) )
 						{
 							clearInterval ( anim );
-							index = ( index + 1 ) % src.length;
-							for ( var i = 0; i < img.length; i++ )
+							obj.img.style.marginLeft = "";
+							obj.env.annimated = false;
+
+							let imgs = player.getElementsByTagName ( "img" );
+
+							player.removeChild ( imgs[ imgs.length - 1 ] );
+							if ( el )
 							{
-								img[ i ].src = src[ ( i + index ) % src.length ];
+								el.style.cursor="";
 							}
-							img[ 0 ].style.marginLeft = 0;
-							img[ img.length - 1 ].style.display = "none";
-							img[ img.length - 1 ].src = "";
-							pictureAnimated = false;
-							el.style.cursor="";
 						}
 						else
 						{
-							img[ 0 ].style.marginLeft = (-numFrame * ( img[ 0 ].width / nbFrames ) ) + "px";
+							obj.img.style.marginLeft = ( numFrame - obj.env.nbFrames ) * ( obj.img.width / obj.env.nbFrames ) + "px";
 						}
 					}
-				})(100);
+				}
+
+				this.next = function ( el )
+				{
+					if ( this.annimated )
+					{
+						return ( false );
+					}
+					else
+					{
+						this.annimated = true;
+					}
+					// get player element
+					let player = el.parentNode.parentNode.parentNode.getElementsByClassName ( "player" )[ 0 ];
+
+					// store player image array
+					let imgs = player.getElementsByTagName ( "img" );
+					
+					// get next local index and global index in circular buffer
+					let lI = ( this.index + imgs.length ) % this.src.length;
+					this.index = ( this.index + 1 ) % this.src.length;
+
+
+					// create new image
+					let img = document.createElement( "img" );
+					img.src = this.src[ lI ];
+
+					player.append ( img );
+
+					var numFrame = 0;
+					var anim = setInterval ( move, 1, {env:this, imgs:imgs,player:player} );
+
+					if ( el )
+					{
+						el.style.cursor="wait";
+					}
+
+					function move ( obj )
+					{
+						if ( !obj.env.nbFrames ||
+							( numFrame++ >= obj.env.nbFrames ) )
+						{
+							clearInterval ( anim );
+							player.removeChild( obj.imgs[ 0 ] );
+							obj.env.annimated = false;
+
+							if ( el )
+							{
+								el.style.cursor="";
+							}
+						}
+						else
+						{
+							obj.imgs[ 0 ].style.marginLeft = -( numFrame ) * ( obj.imgs[ 0 ].width / obj.env.nbFrames ) + "px";
+						}
+					}
+				}
 			}
+
+			let carousel = new carouselJs( "carouselID", [
+				"http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg", // science is cool
+				"https://cdn.pixabay.com/photo/2016/07/02/12/21/wallpaper-1492818_960_720.jpg", // eclipse
+				"https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg", // red and blue wave
+				"https://wallpapercave.com/wp/FSlJFYH.jpg", // sicence
+				"https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" // cloud
+			], 100);
 		</script>
 		<script type="text/javascript"> // slider
 			function changeLight ( flag )
