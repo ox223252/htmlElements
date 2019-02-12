@@ -1133,9 +1133,9 @@
 				</map>
 			</div>
 			<div id="carouselID" class="carousel"><!-- carousel -->
-				<div class="navBarre">
-					<div class="arrow left"><span class="left" onclick="carousel.previous(this);">&lt;</span></div>
-					<div class="arrow right"><span class="right" onclick="carousel.next(this);">&gt;</span></div>
+				<div class="navBarre" onclick="carousel.continus = false;">
+					<div class="arrow left"><span id="carouselLeft" class="left">&lt;</span></div>
+					<div class="arrow right"><span id="carouselRight" class="right">&gt;</span></div>
 				</div>
 			</div>
 		</section>
@@ -1253,6 +1253,8 @@
 				this.annimated = false
 				this.src = [].concat( src );
 				this.nbFrames = nbFrames || 100;
+				this.timer = null;
+				this.continus = true;
 
 				let player = document.createElement( "div" );
 				player.classList.add( "player" );
@@ -1267,7 +1269,7 @@
 					player.append ( img );
 				}
 
-				this.previous  = function ( el )
+				this.previous = function ( el, continus = false, cId = id )
 				{
 					if ( this.annimated )
 					{
@@ -1278,35 +1280,44 @@
 						this.annimated = true;
 					}
 
-					// get previous index in circular buffer
-					this.index = ( this.src.length + this.index - 1 ) % this.src.length;
 
 					// get player element
-					let player = el.parentNode.parentNode.parentNode.getElementsByClassName ( "player" )[ 0 ];
-
-					// create new image
-					let img = document.createElement( "img" );
-					img.src = this.src[ this.index ];
-					img.style.marginLeft = -player.getElementsByTagName( "img" )[ 0 ].width  + "px";
-
-					player.prepend ( img );
+					let player = document.getElementById( cId ).getElementsByClassName ( "player" )[ 0 ];
 
 					var numFrame = 0;
-					var anim = setInterval ( move, 1, {env:this, img:img,player:player} );
+					this.timer = setInterval ( move, 1, {env:this, player:player} );
+					this.continus = continus;
 
 					if ( el )
 					{
 						el.style.cursor="wait";
 					}
 
+					// to store new image
+					let img = null;
+
 					function move ( obj )
 					{
-						if ( !obj.env.nbFrames ||
-							( numFrame++ >= obj.env.nbFrames ) )
+						if ( numFrame == 0 )
 						{
-							clearInterval ( anim );
-							obj.img.style.marginLeft = "";
-							obj.env.annimated = false;
+							// get previous index in circular buffer
+							obj.env.index = ( obj.env.src.length + obj.env.index - 1 ) % obj.env.src.length;
+
+							// create new image
+							img = document.createElement( "img" );
+							img.src = obj.env.src[ obj.env.index ];
+							img.style.marginLeft = -player.getElementsByTagName( "img" )[ 0 ].width  + "px";
+
+							player.prepend ( img );
+						}
+
+						img.style.marginLeft = ( numFrame - obj.env.nbFrames ) * ( img.width / obj.env.nbFrames ) + "px";
+
+						numFrame = ( numFrame + 1 ) % obj.env.nbFrames;
+
+						if ( numFrame == 0 )
+						{
+							img.style.marginLeft = "";
 
 							let imgs = player.getElementsByTagName ( "img" );
 
@@ -1315,15 +1326,21 @@
 							{
 								el.style.cursor="";
 							}
-						}
-						else
-						{
-							obj.img.style.marginLeft = ( numFrame - obj.env.nbFrames ) * ( obj.img.width / obj.env.nbFrames ) + "px";
+
+							if ( !obj.env.continus )
+							{
+								// stop mvt
+								clearInterval ( obj.env.timer );
+								obj.env.timer = null;
+								obj.env.annimated = false;
+							}
 						}
 					}
+
+					return ( true );
 				}
 
-				this.next = function ( el )
+				this.next = function ( el, continus = false, cId = id )
 				{
 					if ( this.annimated )
 					{
@@ -1333,50 +1350,54 @@
 					{
 						this.annimated = true;
 					}
+
 					// get player element
-					let player = el.parentNode.parentNode.parentNode.getElementsByClassName ( "player" )[ 0 ];
+					let player = document.getElementById( cId ).getElementsByClassName ( "player" )[ 0 ];
 
-					// store player image array
-					let imgs = player.getElementsByTagName ( "img" );
-					
-					// get next local index and global index in circular buffer
-					let lI = ( this.index + imgs.length ) % this.src.length;
-					this.index = ( this.index + 1 ) % this.src.length;
+					// to store player image array
+					let imgs = null;
 
-
-					// create new image
-					let img = document.createElement( "img" );
-					img.src = this.src[ lI ];
-
-					player.append ( img );
-
-					var numFrame = 0;
-					var anim = setInterval ( move, 1, {env:this, imgs:imgs,player:player} );
-
-					if ( el )
-					{
-						el.style.cursor="wait";
-					}
+					let numFrame = 0;
+					this.timer = setInterval ( move, 1, {env:this, player:player} );
+					this.continus = continus;
 
 					function move ( obj )
 					{
-						if ( !obj.env.nbFrames ||
-							( numFrame++ >= obj.env.nbFrames ) )
+						if ( numFrame == 0 )
 						{
-							clearInterval ( anim );
-							player.removeChild( obj.imgs[ 0 ] );
-							obj.env.annimated = false;
+							// store image
+							imgs = player.getElementsByTagName ( "img" );
 
-							if ( el )
+							// get next local index and global index in circular buffer
+							let lI = ( obj.env.index + imgs.length ) % obj.env.src.length;
+							obj.env.index = ( obj.env.index + 1 ) % obj.env.src.length;
+							
+							// create new image
+							let img = document.createElement( "img" );
+							img.src = obj.env.src[ lI ];
+
+							player.append ( img );
+						}
+
+						imgs[ 0 ].style.marginLeft = -( numFrame ) * ( imgs[ 0 ].width / obj.env.nbFrames ) + "px";
+
+						numFrame = ( numFrame + 1 ) % obj.env.nbFrames;
+
+						if ( numFrame == 0 )
+						{
+							player.removeChild( imgs[ 0 ] );
+
+							if ( !obj.env.continus )
 							{
-								el.style.cursor="";
+								// stop mvt
+								clearInterval ( obj.env.timer );
+								obj.env.timer = null;
+								obj.env.annimated = false;
 							}
 						}
-						else
-						{
-							obj.imgs[ 0 ].style.marginLeft = -( numFrame ) * ( obj.imgs[ 0 ].width / obj.env.nbFrames ) + "px";
-						}
 					}
+
+					return ( true );
 				}
 			}
 
@@ -1387,6 +1408,22 @@
 				"https://wallpapercave.com/wp/FSlJFYH.jpg", // sicence
 				"https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" // cloud
 			], 100);
+
+			document.getElementById( "carouselLeft" ).addEventListener( "click", function( ev )
+			{
+				if ( carousel.previous ( ev.target, true ) )
+				{
+					ev.stopPropagation ( );
+				}
+			});
+
+			document.getElementById( "carouselRight" ).addEventListener( "click", function( ev )
+			{
+				if ( carousel.next ( ev.target, true ) )
+				{
+					ev.stopPropagation ( );
+				}
+			});
 		</script>
 		<script type="text/javascript"> // slider
 			function changeLight ( flag )
