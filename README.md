@@ -39,8 +39,99 @@ This part of code is to create a carousel
 
 ![carousel](carousel/imgs/carousel.png)
 
+If you click once on the arrow, the display will be continue, you should click another time on the carousel to stop it.
+
+To change only one image, you shoud click twice.
+
+To modes exists for carousels, the first one only allow to change images one by one:
+
+```HTML
+<div id="carouselID" class="carousel">
+	<div class="navBarre" onclick="carousel.continus = false;">
+		<div class="arrow left"><span class="left" onclick="carousel.previous(this)">&lt;</span></div>
+		<div class="arrow right"><span class="right" onclick="carousel.next(this)">&gt;</span></div>
+	</div>
+</div>
+```
+
+The second one allow to create a infinite sliding carousel
+
+```HTML
+<div id="carouselID" class="carousel">
+	<div class="navBarre" onclick="carousel.continus = false;">
+		<div class="arrow left"><span id="carouselLeft" class="left">&lt;</span></div>
+		<div class="arrow right"><span id="carouselRight" class="right">&gt;</span></div>
+	</div>
+</div>
+```
+
+```Javascript
+document.getElementById( "carouselLeft" ).addEventListener( "click", function( ev )
+{
+	if ( carousel.previous ( ev.target, true ) )
+	{
+		ev.stopPropagation ( );
+	}
+});
+
+document.getElementById( "carouselRight" ).addEventListener( "click", function( ev )
+{
+	if ( carousel.next ( ev.target, true ) )
+	{
+		ev.stopPropagation ( );
+	}
+});
+```
+
 ## grid:
 This part of code provide a mecanism to feed a grid automaticly with content defined staticly without care about alignment.
 
 ![large nav barre](grid/imgs/3columns.png)
 ![small nav barre](grid/imgs/2columns.png)
+
+## dark-light :
+This part of code allow two them colors for the page.
+
+The global CSS shouldn't include color rules, they should be add in two external CSS file and sourced in function of the selector.
+
+```HTML
+<head>
+	<link id="lightCss" rel="stylesheet" href="/css/colorDark.css">
+</head>
+```
+
+```Javascript
+function changeLight ( flag )
+{
+	if ( flag )
+	{ // light mode
+		document.getElementById ( 'lightCss' ).href = '/css/colorLight.css';
+	}
+	else
+	{ // dark mode
+		document.getElementById ( 'lightCss' ).href = '/css/colorDark.css';
+	}
+}
+```
+
+obviouly you can add CSS in the main page as in exemple:
+
+```HTML
+<head>
+	<style id="lightCss"></style>
+</head>
+```
+
+```Javascript
+function changeLight ( flag )
+{
+	if ( flag )
+	{ // light mode
+		document.getElementById ( 'lightCss' ).innerHTML = '.onlyDark{display:none;}';
+	}
+	else
+	{ // dark mode
+		document.getElementById ( 'lightCss' ).innerHTML = 'body{color: #fdf6e3;background-color: #333;}.onlyLight{display:none;}';
+	}
+}
+```
