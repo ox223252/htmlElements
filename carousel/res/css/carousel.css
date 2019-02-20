@@ -1,0 +1,65 @@
+.carousel
+{
+	display: inline-block;
+	width:600px; /* ratio 1920/1080 * 33% */
+	height:113px;
+	overflow: hidden;
+}
+.carousel .player
+{
+	height:100%;
+	white-space: nowrap;
+}
+.carousel .player img
+{
+	display: inline-block;
+	width: calc( 100% / 3 );
+	height:100%;
+}
+.carousel .navBarre
+{
+	display: flex;
+	position: relative;
+	top: -86px; /* .carousel height / 2 + 30px (3em)*/
+}
+.carousel .navBarre .arrow
+{
+	display: inline-block;
+	width: 50%;
+	font-size: 3em;
+}
+.carousel .navBarre .left
+{
+	text-align: left;
+}
+.carousel .navBarre .right
+{
+	text-align: right;
+}
+.carousel .navBarre .arrow span
+{
+	background-color: rgba(0,0,0,0.5);
+	color: rgba(255,255,255,0.5);
+	padding: 5px;
+}
+.carousel .navBarre .arrow span:hover
+{
+	background-color: rgba(0,0,0,0.6);
+	color: rgba(255,255,255,0.8);
+	cursor: grab;
+}
+.carousel .navBarre .arrow span:active
+{
+	cursor: grabbing;
+}
+.carousel .navBarre .arrow span.right
+{
+	border-top-left-radius: 80% 40%;
+	border-bottom-left-radius: 80% 40%;
+	text-align: right;
+}
+.carousel .navBarre .arrow span.left
+{
+	border-top-right-radius: 80% 40%;
+	border-bottom-right-radius: 80% 40%;
+}A

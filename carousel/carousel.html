@@ -2,73 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<style type="text/css">
-			.carousel
-			{
-				display: inline-block;
-				width:600px; /* ratio 1920/1080 * 33% */
-				height:113px;
-				overflow: hidden;
-			}
-			.carousel .player
-			{
-				height:100%;
-				white-space: nowrap;
-			}
-			.carousel .player img
-			{
-				display: inline-block;
-				width: calc( 100% / 3 );
-				height:100%;
-			}
-			.carousel .navBarre
-			{
-				display: flex;
-				position: relative;
-				top: -86px; /* .carousel height / 2 + 30px (3em)*/
-			}
-			.carousel .navBarre .arrow
-			{
-				display: inline-block;
-				width: 50%;
-				font-size: 3em;
-			}
-			.carousel .navBarre .left
-			{
-				text-align: left;
-			}
-			.carousel .navBarre .right
-			{
-				text-align: right;
-			}
-			.carousel .navBarre .arrow span
-			{
-				background-color: rgba(0,0,0,0.5);
-				color: rgba(255,255,255,0.5);
-				padding: 5px;
-			}
-			.carousel .navBarre .arrow span:hover
-			{
-				background-color: rgba(0,0,0,0.6);
-				color: rgba(255,255,255,0.8);
-				cursor: grab;
-			}
-			.carousel .navBarre .arrow span:active
-			{
-				cursor: grabbing;
-			}
-			.carousel .navBarre .arrow span.right
-			{
-				border-top-left-radius: 80% 40%;
-				border-bottom-left-radius: 80% 40%;
-				text-align: right;
-			}
-			.carousel .navBarre .arrow span.left
-			{
-				border-top-right-radius: 80% 40%;
-				border-bottom-right-radius: 80% 40%;
-			}
-		</style>
+		<link rel="stylesheet" href="res/css/carousel.css">
 	</head>
 	<body>
 		<div id="carouselID" class="carousel">
@@ -77,161 +11,8 @@
 				<div class="arrow right"><span id="carouselRight" class="right">&gt;</span></div>
 			</div>
 		</div>
+		<script src="res/js/carousel.js"></script>
 		<script type="text/javascript">
-			function carouselJs ( id, src, nbFrames )
-			{
-				this.index = 0;
-				this.annimated = false
-				this.src = [].concat( src );
-				this.nbFrames = nbFrames || 100;
-				this.timer = null;
-				this.continus = true;
-
-				let player = document.createElement( "div" );
-				player.classList.add( "player" );
-				document.getElementById( id ).prepend ( player );
-
-				console.log( this.nbFrames );
-
-				for ( let i = 0; i < 3; i++ )
-				{
-					let img = document.createElement( "img" );
-					img.src = this.src[ i % this.src.length ];
-					player.append ( img );
-				}
-
-				this.previous = function ( el, continus = false, cId = id )
-				{
-					if ( this.annimated )
-					{
-						return ( false );
-					}
-					else
-					{
-						this.annimated = true;
-					}
-
-
-					// get player element
-					let player = document.getElementById( cId ).getElementsByClassName ( "player" )[ 0 ];
-
-					var numFrame = 0;
-					this.timer = setInterval ( move, 1, {env:this, player:player} );
-					this.continus = continus;
-
-					if ( el )
-					{
-						el.style.cursor="wait";
-					}
-
-					// to store new image
-					let img = null;
-
-					function move ( obj )
-					{
-						if ( numFrame == 0 )
-						{
-							// get previous index in circular buffer
-							obj.env.index = ( obj.env.src.length + obj.env.index - 1 ) % obj.env.src.length;
-
-							// create new image
-							img = document.createElement( "img" );
-							img.src = obj.env.src[ obj.env.index ];
-							img.style.marginLeft = -player.getElementsByTagName( "img" )[ 0 ].width  + "px";
-
-							player.prepend ( img );
-						}
-
-						img.style.marginLeft = ( numFrame - obj.env.nbFrames ) * ( img.width / obj.env.nbFrames ) + "px";
-
-						numFrame = ( numFrame + 1 ) % obj.env.nbFrames;
-
-						if ( numFrame == 0 )
-						{
-							img.style.marginLeft = "";
-
-							let imgs = player.getElementsByTagName ( "img" );
-
-							player.removeChild ( imgs[ imgs.length - 1 ] );
-							if ( el )
-							{
-								el.style.cursor="";
-							}
-
-							if ( !obj.env.continus )
-							{
-								// stop mvt
-								clearInterval ( obj.env.timer );
-								obj.env.timer = null;
-								obj.env.annimated = false;
-							}
-						}
-					}
-
-					return ( true );
-				}
-
-				this.next = function ( el, continus = false, cId = id )
-				{
-					if ( this.annimated )
-					{
-						return ( false );
-					}
-					else
-					{
-						this.annimated = true;
-					}
-
-					// get player element
-					let player = document.getElementById( cId ).getElementsByClassName ( "player" )[ 0 ];
-
-					// to store player image array
-					let imgs = null;
-
-					let numFrame = 0;
-					this.timer = setInterval ( move, 1, {env:this, player:player} );
-					this.continus = continus;
-
-					function move ( obj )
-					{
-						if ( numFrame == 0 )
-						{
-							// store image
-							imgs = player.getElementsByTagName ( "img" );
-
-							// get next local index and global index in circular buffer
-							let lI = ( obj.env.index + imgs.length ) % obj.env.src.length;
-							obj.env.index = ( obj.env.index + 1 ) % obj.env.src.length;
-							
-							// create new image
-							let img = document.createElement( "img" );
-							img.src = obj.env.src[ lI ];
-
-							player.append ( img );
-						}
-
-						imgs[ 0 ].style.marginLeft = -( numFrame ) * ( imgs[ 0 ].width / obj.env.nbFrames ) + "px";
-
-						numFrame = ( numFrame + 1 ) % obj.env.nbFrames;
-
-						if ( numFrame == 0 )
-						{
-							player.removeChild( imgs[ 0 ] );
-
-							if ( !obj.env.continus )
-							{
-								// stop mvt
-								clearInterval ( obj.env.timer );
-								obj.env.timer = null;
-								obj.env.annimated = false;
-							}
-						}
-					}
-
-					return ( true );
-				}
-			}
-
 			var src = [];
 			
 			let carousel = new carouselJs( "carouselID", [
@@ -244,14 +25,13 @@
 
 			document.getElementById( "carouselLeft" ).addEventListener( "click", function( ev )
 			{
-				if ( carousel.previous ( ev.target, true ) )
-				{
-					ev.stopPropagation ( );
-				}
+				// to change only one
+				carousel.previous ( ev.target, false );
 			});
 
 			document.getElementById( "carouselRight" ).addEventListener( "click", function( ev )
 			{
+				// to change continus
 				if ( carousel.next ( ev.target, true ) )
 				{
 					ev.stopPropagation ( );
