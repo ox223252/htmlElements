@@ -25,6 +25,54 @@ This will display a flag selector to change display language easily, you can mod
 
 It was created with the least possible Javascript, and to use HTML5 and CSS3 tricks.
 
+You can create a simple flagPicker like this :
+
+```HTML
+<div id="country_1" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+<section class="lang_uk">
+	English
+</section>
+<script src="js/countrySelector.js"></script>
+<script type="text/javascript">
+let config_1 = {
+		language:[
+			{
+				lang:'uk',
+				logo:'imgs/united-kingdom-flag.svg'
+			},
+			...
+		],
+		langPart:"lang_"
+	};
+	countrySelector ( "country_1", config_1, "uk" );
+</script>
+```
+
+Or you can create a flag picker with muli point access :
+
+```HTML
+<div id="country_1" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+<section class="lang_uk">
+	English
+</section>
+<div id="country_2" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+<script type="text/javascript">
+	let config_1 = {
+		language:[
+			{
+				lang:'uk',
+				logo:'imgs/united-kingdom-flag.svg'
+			},
+			...
+		],
+		langPart:"lang_"
+	};
+
+	countrySelector ( "country_1", config_2, "uk" );
+	countrySelector ( "country_2", config_2, "uk", "country_1" );
+</script>
+```
+
 ## nav barre:
 This will provide a small navigation barre responsive and customisable
 

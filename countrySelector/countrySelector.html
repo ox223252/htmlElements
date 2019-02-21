@@ -2,91 +2,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<style type="text/css">
-			.flagSelector
-			{
-				display: none;
-			}
-
-			.flagDisplay
-			{
-				width: 100%;
-				height: 21px;
-				position: relative;
-				background-image: none;
-				background-repeat: no-repeat;
-				background-size: cover;
-				background-position: center;
-				border-radius: 3px;
-			}
-
-			#country
-			{
-				width: 32px;
-				height: 21px;	
-				border-radius: 10px;
-			}
-
-			#country label
-			{
-				display:flex;
-			}
-
-			#country > #selector
-			{
-				opacity: 0;
-				position:absolute;
-
-				z-index: 1;
-				background: white;
-				border-radius: 5px;
-				border: solid 1px black;
-				box-shadow: 1px 1px 2px black ;
-				padding: 5px;
-				margin-top: 10px;
-				margin-left: -6px;
-
-				transform: scale(0);
-				transition: all .25s;
-			}
-
-			#country:hover #selector
-			{
-				opacity: 1;
-				transform: scale(1);
-			}
-
-			#france-flag:checked + #country_fr
-			{
-				background-image: url("imgs/france-flag.svg");
-			}
-			#united-kingdom-flag:checked + #country_uk
-			{
-				background-image: url("imgs/united-kingdom-flag.svg");
-			}
-			#spain-flag:checked + #country_sp
-			{
-				background-image: url("imgs/spain-flag.svg");
-			}
-		</style>
+		<link rel="stylesheet" href="css/countrySelector.css">
 	</head>
 	<body>
-		<div id="country">
-			<div id="selector">
-				<label for="france-flag"><img width=32 height=21 src="imgs/france-flag.svg"></label>
-				<label for="united-kingdom-flag"><img width=32 height=21 src="imgs/united-kingdom-flag.svg"></label>
-				<label for="spain-flag"><img width=32 height=21 src="imgs/spain-flag.svg"></label>
-			</div>
-
-			<input class="flagSelector" type="radio" name="langSelector" id="france-flag" onclick="selector.changeFlag( this.value );" value="fr" checked>
-			<div class="flagDisplay" id="country_fr" style="top:0;"></div>
-
-			<input class="flagSelector" type="radio" name="langSelector" id="united-kingdom-flag" onclick="selector.changeFlag( this.value );" value="uk">
-			<div class="flagDisplay" id="country_uk" style="top:-21px;"></div>
-
-			<input class="flagSelector" type="radio" name="langSelector" id="spain-flag" onclick="selector.changeFlag( this.value );" value="sp">
-			<div class="flagDisplay" id="country_sp" style="top:-42px;"></div>
-		</div>
+		<h2>Single</h2>
+		<div id="country_1" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
 		<section class="lang_fr">
 			Français
 		</section>
@@ -96,63 +16,58 @@
 		<section class="lang_sp">
 			Español
 		</section>
+		<h2>Multiple</h2>
+		<div id="country_2" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+		<section class="lang_2fr">
+			Français
+		</section>
+		<section class="lang_2uk">
+			English
+		</section>
+		<section class="lang_2sp">
+			Español
+		</section>
+		<div id="country_3" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+		<script src="js/countrySelector.js"></script>
 		<script type="text/javascript">
-			class countrySelector
-			{
-				constructor ( language )
-				{
-					this.lang = [];
-					this.els = [];
-
-					var el = document.getElementsByClassName( 'flagSelector' );
-					for ( var i = 0; i < el.length; i++ )
+			let config_1 = {
+				language:[
 					{
-						this.lang.push ( el[ i ].value );
-
-						if ( el[ i ].checked )
-						{
-							language = el[ i ].value;
-						}
-					}
-
-					this.updateElements ( );
-					if ( language )
+						lang:'uk',
+						logo:'imgs/united-kingdom-flag.svg'
+					},
 					{
-						this.changeFlag ( language );
-					}
-				}
-
-				changeFlag ( language )
-				{
-					for ( var i = 0; i < this.lang.length; i++ )
+						lang:'fr',
+						logo:'imgs/france-flag.svg'
+					},
 					{
-						if ( this.lang[ i ] == language )
-						{
-							for ( var j = 0; j < this.els[ i ].length; j++ )
-							{
-								this.els[ i ][ j ].style.display = "";
-							}
-						}
-						else
-						{
-							for ( var j = 0; j < this.els[ i ].length; j++ )
-							{
-								this.els[ i ][ j ].style.display = "none";
-							}
-						}
+						lang:'sp',
+						logo:'imgs/spain-flag.svg'
 					}
-				}
-
-				updateElements ( )
-				{
-					for ( var i = 0; i < this.lang.length; i++ )
+				],
+				langPart:"lang_"
+			};
+			let config_2 = {
+				language:[
 					{
-						this.els[ i ] = document.getElementsByClassName ( 'lang_' + this.lang[ i ] );
+						lang:'uk',
+						logo:'imgs/united-kingdom-flag.svg'
+					},
+					{
+						lang:'fr',
+						logo:'imgs/france-flag.svg'
+					},
+					{
+						lang:'sp',
+						logo:'imgs/spain-flag.svg'
 					}
-				}
-			}
+				],
+				langPart:"lang_2"
+			};
 
-			var selector = new countrySelector ( 'uk' );
+			countrySelector ( "country_1", config_1, "uk" );
+			countrySelector ( "country_2", config_2, "fr" );
+			countrySelector ( "country_3", config_2, "fr", "country_2" );
 		</script>
 	</body>
 </html>
