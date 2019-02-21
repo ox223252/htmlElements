@@ -1,0 +1,10 @@
+.grid 
+{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-evenly;
+}
+.grid-content
+{
+	max-width:100%;
+}
