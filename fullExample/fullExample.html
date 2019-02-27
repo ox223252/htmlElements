@@ -320,83 +320,7 @@
 			}
 		</style>
 		<link rel="stylesheet" href="../carousel/css/carousel.css">
-		<style type="text/css"> /* slider */
-			#lightSlider
-			{
-				float: right;
-			}
-
-			.switch
-			{
-				position: relative;
-				display: inline-block;
-				width: 60px;
-				height: 34px;
-			}
-
-			.switch input
-			{ 
-				opacity: 0;
-				width: 0;
-				height: 0;
-			}
-
-			.slider
-			{
-				position: absolute;
-				cursor: pointer;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background-color: #ccc;
-				-webkit-transition: .4s;
-				transition: .4s;
-			}
-
-			.slider:before
-			{
-				position: absolute;
-				content: "";
-				height: 26px;
-				width: 26px;
-				left: 4px;
-				bottom: 4px;
-				background-color: white;
-				-webkit-transition: .4s;
-				transition: .4s;
-			}
-
-			input:checked + .slider
-			{
-				background-color: #2196F3;
-			}
-
-			input:focus + .slider
-			{
-				box-shadow: 0 0 1px #2196F3;
-			}
-
-			input:checked + .slider:before
-			{
-				-webkit-transform: translateX(26px);
-				-ms-transform: translateX(26px);
-				transform: translateX(26px);
-			}
-
-			/* Rounded sliders */
-			.slider.round
-			{
-				border-radius: 34px;
-			}
-
-			.slider.round:before
-			{
-				border-radius: 50%;
-			}
-		</style>
-		<style id="darkLight" type="text/css"> /* dark-light */
-		</style>
+		<link rel="stylesheet" href="../dark-light/css/dark-light.css">
 	</head>
 	<body>
 		<nav id="menu">
@@ -413,17 +337,12 @@
 
 				<div id="country" class="flagSelector"></div>
 			</div>
-			<div id="lightSlider" style="display:flex;margin-left:auto">
+			<div style="display:flex;margin-left:auto;float: right;">
 				<div style="font-size: 26px;margin-right: 5px;">
 					<span class="onlyLight">Light</span>
 					<span class="onlyDark">Dark</span>
 				</div>
-				<div>
-					<label class="switch">
-						<input id="lightSelector" onchange="changeLight(this.checked);" type="checkbox">
-						<span class="slider round"></span>
-					</label>
-				</div>
+				<div class="lightSlider"></div>
 			</div>
 		</nav>
 		<div id="underNav">
@@ -956,26 +875,15 @@
 				}
 			});
 		</script>
-		<script type="text/javascript"> // slider
-			function changeLight ( flag )
-			{
-				if ( flag )
-				{ // light mode
-					document.getElementById ( 'darkLight' ).innerHTML = '.onlyDark{display:none;}\
-					html, body, section{background-color: #aaa;}\
-					.poems{background-color: #FFF0BC;}';
-				
-				}
-				else
-				{ // dark mode
-					document.getElementById ( 'darkLight' ).innerHTML = 'body{color: #fdf6e3;background-color: #333;}\
-						.onlyLight{display:none;}\
-						.poems{background-color: #444;}\
-						.infoText{background-color: #555;}';
-				}
-			}
-
-			changeLight(document.getElementsByTagName('lightSelector').checked);
+		<script type="text/javascript" src="../dark-light/js/dark-light.js"></script>
+		<script type="text/javascript">
+			createDLSwitchStyle ( "lightSlider", '.onlyDark{display:none;}\
+				html, body, section{background-color: #aaa;}\
+				.poems{background-color: #FFF0BC;}',
+				'body{color: #fdf6e3;background-color: #333;}\
+				.onlyLight{display:none;}\
+				.poems{background-color: #444;}\
+				.infoText{background-color: #555;}');
 		</script>
 	</body>
 </html>
