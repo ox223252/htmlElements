@@ -3,71 +3,209 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/countrySelector.css">
+		<style type="text/css">
+			table
+			{
+				width:100%;
+				border-collapse: collapse;
+			}
+			td
+			{
+				text-align: center;
+				border: black 1px solid;
+			}
+			td > div
+			{
+				text-align: left;
+				margin: auto;
+				padding:10px;
+			}
+
+			.lang_ar,
+			.lang_4ar
+			{
+				text-align: right;
+			}
+		</style>
 	</head>
 	<body>
-		<h2>Single</h2>
-		<div id="country_1" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
-		<section class="lang_fr">
-			Français
-		</section>
-		<section class="lang_uk">
-			English
-		</section>
-		<section class="lang_sp">
-			Español
-		</section>
-		<h2>Multiple</h2>
-		<div id="country_2" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
-		<section class="lang_2fr">
-			Français
-		</section>
-		<section class="lang_2uk">
-			English
-		</section>
-		<section class="lang_2sp">
-			Español
-		</section>
-		<div id="country_3" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+		<table>
+			<thead>
+				<tr>
+					<td>
+						Flag
+					</td>
+					<td>
+						language
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan=2>
+						<h2>Single</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="country_1" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+						<div class="state_fr">
+							France
+						</div>
+						<div class="state_uk">
+							England
+						</div>
+						<div class="state_sp">
+							España
+						</div>
+					</td>
+					<td>
+						<div id="lang_1" class="langSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+						<div class="lang_fr">
+							Bonjour en Français
+						</div>
+						<div class="lang_en">
+							Hello in English
+						</div>
+						<div class="lang_sp">
+							Hola en Español
+						</div>
+						<div class="lang_ar">
+							مرحبا بالعربية
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h2>Multiple</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="country_2" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+						<div class="state_2fr">
+							France
+						</div>
+						<div class="state_2uk">
+							England
+						</div>
+						<div class="state_2sp">
+							España
+						</div>
+						<div id="country_3" class="flagSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+					</td>
+					<td>
+						<div id="lang_2" class="langSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+						<div class="lang_4fr">
+							Bonjour en Français
+						</div>
+						<div class="lang_4en">
+							Hello in English
+						</div>
+						<div class="lang_4sp">
+							Hola en Español
+						</div>
+						<div class="lang_4ar">
+							مرحبا بالعربية
+						</div>
+						<div id="lang_3" class="langSelector" style="width: 32px;height: 21px;border-radius: 10px;"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
 		<script src="js/countrySelector.js"></script>
 		<script type="text/javascript">
 			let config_1 = {
-				language:[
+				country:[
 					{
-						lang:'uk',
+						state:'uk',
 						logo:'imgs/united-kingdom-flag.svg'
 					},
 					{
-						lang:'fr',
+						state:'fr',
 						logo:'imgs/france-flag.svg'
 					},
 					{
-						lang:'sp',
+						state:'sp',
 						logo:'imgs/spain-flag.svg'
 					}
 				],
-				langPart:"lang_"
+				statePart:"state_"
 			};
 			let config_2 = {
-				language:[
+				country:[
 					{
-						lang:'uk',
+						state:'uk',
 						logo:'imgs/united-kingdom-flag.svg'
 					},
 					{
-						lang:'fr',
+						state:'fr',
 						logo:'imgs/france-flag.svg'
 					},
 					{
-						lang:'sp',
+						state:'sp',
 						logo:'imgs/spain-flag.svg'
 					}
 				],
-				langPart:"lang_2"
+				statePart:"state_2"
 			};
 
 			countrySelector ( "country_1", config_1, "uk" );
 			countrySelector ( "country_2", config_2, "fr" );
 			countrySelector ( "country_3", config_2, "fr", "country_2" );
+
+
+
+
+			let config_3 = {
+				language:[
+					{
+						lang:'ar',
+						text:"العربية",
+						style:"text-align:right"
+					},
+					{
+						lang:'en',
+						text:'English'
+					},
+					{
+						lang:'sp',
+						text:'Español'
+					},
+					{
+						lang:'fr',
+						text:'Français'
+					}
+				],
+				langPart:"lang_"
+			};
+			let config_4 = {
+				language:[
+					{
+						lang:'ar',
+						text:"العربية",
+						style:"text-align:right"
+					},
+					{
+						lang:'en',
+						text:'English'
+					},
+					{
+						lang:'sp',
+						text:'Español'
+					},
+					{
+						lang:'fr',
+						text:'Français'
+					}
+				],
+				langPart:"lang_4"
+			};
+
+			languageSelector ( "lang_1", config_3, "fr" );
+			languageSelector ( "lang_2", config_4, "fr" );
+			languageSelector ( "lang_3", config_4, "fr", "lang_2" );
 		</script>
 	</body>
 </html>

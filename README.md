@@ -18,7 +18,7 @@ This will create a [post-it](http://creative-punch.net/2014/02/create-css3-post-
 
 ![post-it](post-it/imgs/post-it.png)
 
-## country selector:
+## country/language selector:
 This will display a flag selector to change display language easily, you can modify it simply by adding new flags or removing existent.
 
 ![countrySelector](countrySelector/imgs/countrySelector.html.png)
@@ -72,6 +72,23 @@ Or you can create a flag picker with muli point access :
 	countrySelector ( "country_2", config_2, "uk", "country_1" );
 </script>
 ```
+
+for some language you should change some CSS rules :
+```javascript
+let config = {
+	language:[
+		{
+			lang:'ar',
+			text:"العربية",
+			style:"text-align:right"
+		},
+		...
+	],
+	langPart:"lang_"
+};
+```
+
+Remember a flag picker is not to choose a language according this rules [en](http://www.flagsarenotlanguages.com/blog/why-flags-do-not-represent-language/), [fr](https://zestedesavoir.com/tutoriels/3039/linternationalisation-et-ses-pieges-creer-un-logiciel-universel/gerer-differentes-langues/).
 
 ## nav barre:
 This will provide a small navigation barre responsive and customisable
