@@ -72,6 +72,17 @@ function drowGrid ( event, force )
 			}
 		}
 	}
+
+	let anchor = location.href.substring(location.href.indexOf("#")+1);
+
+	if ( anchor )
+	{
+		let el = document.getElementById( anchor );
+		if ( el )
+		{
+			window.scrollTo( 0, el.offsetTop );
+		}
+	}
 }
 
 function changeWidth ( value )
