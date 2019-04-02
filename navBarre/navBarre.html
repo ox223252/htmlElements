@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+		<link rel="stylesheet" href="css/navBarre.css">
 		<style type="text/css"> /* general */
 			html, body, section
 			{
@@ -8,7 +9,7 @@
 			}
 			@font-face {
 				font-family: "Own";
-				src: url("Rocket Clouds.ttf") format("truetype");
+				/*src: url("Rocket Clouds.ttf") format("truetype");*/
 			}
 			.poems
 			{
@@ -24,100 +25,11 @@
 				font-family: courier-new;
 			}
 		</style>
-		<style type="text/css"> /* nav menu */
-			#menu
-			{
-				position: fixed;
-				width: 100%;
-				margin-left: -10px;
-				top: 0;
-				background-color: #212529;
-				min-height: 50px;
-			}
-			#menuChecker
-			{
-				display: none;
-			}
-			#menu > *
-			{
-				margin: 5px;
-				padding: 5px;
-			}
-			#menu a
-			{
-				color: rgba(255, 255, 255, 0.70);
-				text-decoration: none;
-			}
-			#menu a:hover
-			{
-				color: rgba(255, 255, 255, 0.9);
-			}
-			#menu, .flex
-			{
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-
-				color: rgba(255, 255, 255, 0.75);
-
-				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-				font-size: 21px;
-			}
-			.flex > *
-			{
-				padding-left: 5px;
-				padding-right: 5px;
-			}
-			#menuChecker:checked + .menuHiddable
-			{
-				display: inherit;
-			}
-
-			@media screen and ( max-width:600px )
-			{
-				#menuMain
-				{
-					width: calc( 100% - 20px );
-				}
-				#menuIcon
-				{
-					float: right;
-				}
-				#menu, .flex
-				{
-					flex-direction: column;
-				}
-				.btn, .menuHiddable
-				{
-					display: none;
-				}
-			}
-			@media screen and ( min-width: 600px )
-			{
-				#menuIcon
-				{
-					display: none;
-				}
-			}
-		</style>
 	</head>
 	<body>
-		<nav id="menu">
-			<div id="menuMain">
-				<a href="/"><i>Home</i></a>
-				<label id="menuIcon" for="menuChecker">&#9776;</label>
-			</div>
-			<input id="menuChecker" type="checkbox" />
-			<div class="menuHiddable flex">
-				<a href="#">lien 1</a>
-				<a href="#">lien 2</a>
-				<a href="#">lien 3</a>
-				<a href="#">lien 4</a>
-			</div>
+		<nav id="navBarre">
+			
 		</nav>
-		<div id="underNav">
-		</div>
-
 		<section>
 			<h2>L'Albatros</h2>
 			<p class="poems">
@@ -139,15 +51,35 @@
 				Ses ailes de géant l'empêchent de marcher.<br>
 			</p>
 		</section>
+		<script src="js/navBarre.js"></script>
 		<script type="text/javascript"> // nav barre
-			function resizeNav ( )
-			{
-				document.getElementById( 'menuChecker' ).checked = false;
-				document.getElementById( 'underNav' ).style.height = document.getElementById ( 'menu' ).clientHeight+'px';
-			}
 
-			window.onload = resizeNav ( );
-			window.onresize = resizeNav;
+			window.onload = initMenuBarre ( "navBarre", [
+				{
+					el:'<a href="#">lien 1</a>'
+				},
+				{
+					el:'<a href="#">lien 2</a>'
+				},
+				{
+					el:'<a href="#">lien 3</a>'
+				},
+				{
+					el:'<a href="#">lien 4</a>'
+				},
+				{
+					el:'<a href="#">lien 5</a>'
+				},
+				{
+					el:'<a href="#">lien 6</a>'
+				},
+				{
+					el:'<a href="#">lien 7</a>'
+				},
+				{
+					el:'<a href="#">lien 8</a>'
+				}
+			]);
 		</script>
 	</body>
 </html>
