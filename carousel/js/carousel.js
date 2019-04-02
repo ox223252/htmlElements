@@ -104,7 +104,7 @@ function carouselJs ( id, src, nbFrames, option = {} )
 
 		var numFrame = 0;
 		this.continus = continus;
-		this.timer = setInterval ( move, 1, {env:this} );
+		this.timer = setInterval ( move, 10, {env:this} );
 
 		if ( el )
 		{
@@ -118,7 +118,6 @@ function carouselJs ( id, src, nbFrames, option = {} )
 		{
 			if ( numFrame == 0 )
 			{
-				console.log( obj );
 				// get previous index in circular buffer
 				obj.env.index = ( obj.env.src.length + obj.env.index - 1 ) % obj.env.src.length;
 
@@ -148,8 +147,6 @@ function carouselJs ( id, src, nbFrames, option = {} )
 
 				if ( obj.env.continus == false )
 				{
-					console.log( obj );
-					console.log( "la"+continus );
 					// stop mvt
 					clearInterval ( obj.env.timer );
 					obj.env.timer = null;
@@ -180,7 +177,7 @@ function carouselJs ( id, src, nbFrames, option = {} )
 		let imgs = null;
 
 		let numFrame = 0;
-		this.timer = setInterval ( move, 1, {env:this} );
+		this.timer = setInterval ( move, 10, {env:this} );
 		this.continus = continus;
 
 		function move ( obj )

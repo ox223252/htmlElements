@@ -28,82 +28,7 @@
 				margin-top: 10px;
 			}
 		</style>
-		<style type="text/css"> /* nav menu */
-			#menu
-			{
-				position: fixed;
-				width: 100%;
-				margin-left: -10px;
-				top: 0;
-				background-color: #212529;
-				min-height: 50px;
-			}
-			#menuChecker
-			{
-				display: none;
-			}
-			#menu > *
-			{
-				margin: 5px;
-				padding: 5px;
-			}
-			#menu a
-			{
-				color: rgba(255, 255, 255, 0.70);
-				text-decoration: none;
-			}
-			#menu a:hover
-			{
-				color: rgba(255, 255, 255, 0.9);
-			}
-			#menu, .flex
-			{
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-
-				color: rgba(255, 255, 255, 0.75);
-
-				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-				font-size: 21px;
-			}
-			.flex > *
-			{
-				padding-left: 5px;
-				padding-right: 5px;
-			}
-			#menuChecker:checked + .menuHiddable
-			{
-				display: inherit;
-			}
-
-			@media screen and ( max-width:600px )
-			{
-				#menuMain
-				{
-					width: calc( 100% - 20px );
-				}
-				#menuIcon
-				{
-					float: right;
-				}
-				#menu, .flex
-				{
-					flex-direction: column;
-				}
-				.btn, .menuHiddable
-				{
-					display: none;
-				}
-			}
-			@media screen and ( min-width: 600px )
-			{
-				#menuIcon
-				{
-					display: none;
-				}
-			}
-		</style>
+		<link rel="stylesheet" href="../navBarre/css/navBarre.css">
 		<style type="text/css"> /* buttons / badge */
 			.danger
 			{
@@ -323,30 +248,7 @@
 		<link rel="stylesheet" href="../dark-light/css/dark-light.css">
 	</head>
 	<body>
-		<nav id="menu">
-			<div id="menuMain">
-				<a href="/"><i>Home</i></a>
-				<label id="menuIcon" for="menuChecker">&#9776;</label>
-			</div>
-			<input id="menuChecker" type="checkbox" />
-			<div class="menuHiddable flex">
-				<a href="#AL" class="lang_fr">Au Lecteur</a>
-				<a href="#GO" class="lang_uk">Growing Old</a>
-				<a href="#TSG" class="lang_uk">The Scholar Gypsy</a>
-				<a href="#A" class="lang_fr">L'Albatros</a>
-
-				<div id="country" class="flagSelector"></div>
-			</div>
-			<div style="display:flex;margin-left:auto;float: right;">
-				<div style="font-size: 26px;margin-right: 5px;">
-					<span class="onlyLight">Light</span>
-					<span class="onlyDark">Dark</span>
-				</div>
-				<div class="lightSlider"></div>
-			</div>
-		</nav>
-		<div id="underNav">
-		</div>
+		<nav id="menu"></nav>
 		<section>
 			<div class="lang_fr">
 				<div class="infoBulle">
@@ -770,29 +672,70 @@
 				</blockquote>
 			</div>
 			<div id="colorPicker"></div>
-			<div id="carouselID" class="carousel"><!-- carousel -->
-				<div class="navBarre" onclick="carousel.continus = false;">
-					<div class="arrow left"><span id="carouselLeft" class="left">&lt;</span></div>
-					<div class="arrow right"><span id="carouselRight" class="right">&gt;</span></div>
-				</div>
-			</div>
-		</section><script src="../countrySelector/js/countrySelector.js"></script>
+			<div id="carouselID" class="carousel"></div>
+		</section>
+		<script src="../countrySelector/js/countrySelector.js"></script>
+		<script type="text/javascript" src="../navBarre/js/navBarre.js"></script>
+		<script type="text/javascript" src="../colorPicker/js/colorPicker.js"></script>
+		<script type="text/javascript" src="../carousel/js/carousel.js"></script>
+		<script type="text/javascript" src="../dark-light/js/dark-light.js"></script>
 		<script type="text/javascript">
-			let config = {
+			initMenuBarre ( "menu", [
+				{
+					el:'<a href="#AL" class="lang_fr">Au Lecteur</a>'
+				},
+				{
+					el:'<a href="#A" class="lang_fr">L\'Albatros</a>'
+				},
+				{
+					el:'<a href="#GO" class="lang_uk">Growing Old</a>'
+				},
+				{
+					el:'<a href="#TSG" class="lang_uk">The Scholar Gypsy</a>'
+				},
+				{
+					el:'<div style="margin-left:auto;float:right;display:flex;flex-direction:row;">\
+						<span id="language" class="langSelector" style="padding-left:5px;padding-right:5px;"></span> \
+						<div class="lightSlider" title="dark/light"></div>\
+					</div>'
+				}
+			]);
+			createDLSwitchStyle ( "lightSlider", '.onlyDark{display:none;}\
+				html, body, section{background-color: #aaa;}\
+				.poems{background-color: #FFF0BC;}',
+				'body{color: #fdf6e3;background-color: #333;}\
+				.onlyLight{display:none;}\
+				.poems{background-color: #444;}\
+				.infoText{background-color: #555;}'
+			);
+			languageSelector ( "language", {
 				language:[
 					{
 						lang:'uk',
-						logo:'../countrySelector/imgs/united-kingdom-flag.svg'
+						text:'English'
 					},
 					{
 						lang:'fr',
-						logo:'../countrySelector/imgs/france-flag.svg'
+						text:'Français'
 					}
 				],
 				langPart:"lang_"
-			};
-
-			countrySelector ( "country", config, "fr" );
+			}, "fr" );
+			carouselJs( "carouselID", [
+				"http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg", // science is cool
+				"https://cdn.pixabay.com/photo/2016/07/02/12/21/wallpaper-1492818_960_720.jpg", // eclipse
+				"https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg", // red and blue wave
+				"https://wallpapercave.com/wp/FSlJFYH.jpg", // sicence
+				"https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" // cloud
+			], 100, {
+				leftId:"carouselLeft",
+				rightId:"carouselRight",
+				leftContinus:true
+			});
+			createColorPiker ( "colorPicker", 
+				(color)=>{ document.getElementById ( "postIt" ).style.backgroundColor = 'rgba('+color.toString()+')'; }, 
+				(color)=>{ console.log( color );document.getElementById ( "postIt" ).style.color = 'rgba('+color.toString()+')'; }
+			);
 		</script>
 		<script type="text/javascript"> // internal nav
 			(function ( staticOffset )
@@ -829,61 +772,7 @@
 
 					});
 				}
-			})(  document.getElementById ( 'menu' ).clientHeight );
-		</script>
-		<script type="text/javascript"> // nav barre
-			function resizeNav ( )
-			{
-				document.getElementById( 'menuChecker' ).checked = false;
-				document.getElementById( 'underNav' ).style.height = document.getElementById ( 'menu' ).clientHeight+'px';
-			}
-
-			window.onload = resizeNav ( );
-			window.onresize = resizeNav;
-		</script>
-		<script type="text/javascript" src="../colorPicker/js/colorPicker.js"></script>
-		<script type="text/javascript">
-			createColorPiker ( "colorPicker", 
-				(color)=>{ document.getElementById ( "postIt" ).style.backgroundColor = 'rgba('+color.toString()+')'; }, 
-				(color)=>{ console.log( color );document.getElementById ( "postIt" ).style.color = 'rgba('+color.toString()+')'; }
-			);
-		</script>
-		<script type="text/javascript" src="../carousel/js/carousel.js"></script>
-		<script type="text/javascript">
-			var src = [];
-			
-			let carousel = new carouselJs( "carouselID", [
-				"http://getwallpapers.com/wallpaper/full/b/8/d/538853.jpg", // science is cool
-				"https://cdn.pixabay.com/photo/2016/07/02/12/21/wallpaper-1492818_960_720.jpg", // eclipse
-				"https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg", // red and blue wave
-				"https://wallpapercave.com/wp/FSlJFYH.jpg", // sicence
-				"https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" // cloud
-			], 100);
-
-			document.getElementById( "carouselLeft" ).addEventListener( "click", function( ev )
-			{
-				// to change only one
-				carousel.previous ( ev.target, false );
-			});
-
-			document.getElementById( "carouselRight" ).addEventListener( "click", function( ev )
-			{
-				// to change continus
-				if ( carousel.next ( ev.target, true ) )
-				{
-					ev.stopPropagation ( );
-				}
-			});
-		</script>
-		<script type="text/javascript" src="../dark-light/js/dark-light.js"></script>
-		<script type="text/javascript">
-			createDLSwitchStyle ( "lightSlider", '.onlyDark{display:none;}\
-				html, body, section{background-color: #aaa;}\
-				.poems{background-color: #FFF0BC;}',
-				'body{color: #fdf6e3;background-color: #333;}\
-				.onlyLight{display:none;}\
-				.poems{background-color: #444;}\
-				.infoText{background-color: #555;}');
+			})( document.getElementById ( 'menu' ).clientHeight );
 		</script>
 	</body>
 </html>
