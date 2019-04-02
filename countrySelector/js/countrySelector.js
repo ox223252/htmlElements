@@ -80,6 +80,10 @@ function countrySlectorChangeFlag ( id, part, state, country )
 		{
 			header += '.'+part + state[ i ]+'{display:none} ';
 		}
+		else
+		{
+			header += '.'+part + state[ i ]+'{display:inline-block} ';
+		}
 	}
 	document.getElementById( id ).innerHTML = header;
 }
