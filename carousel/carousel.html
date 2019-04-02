@@ -5,12 +5,7 @@
 		<link rel="stylesheet" href="css/carousel.css">
 	</head>
 	<body>
-		<div id="carouselID" class="carousel">
-			<div class="navBarre" onclick="carousel.continus = false;">
-				<div class="arrow left"><span id="carouselLeft" class="left">&lt;</span></div>
-				<div class="arrow right"><span id="carouselRight" class="right">&gt;</span></div>
-			</div>
-		</div>
+		<div style="width:500px;"><div id="carouselID" class="carousel"></div></div>
 		<script src="js/carousel.js"></script>
 		<script type="text/javascript">
 			var src = [];
@@ -21,22 +16,20 @@
 				"https://wallpapertag.com/wallpaper/full/4/2/0/461650-full-size-scientific-dna-wallpapers-1920x1080-hd.jpg", // red and blue wave
 				"https://wallpapercave.com/wp/FSlJFYH.jpg", // sicence
 				"https://free4kwallpapers.com/uploads/originals/2015/11/11/from-the-comic-dark-science-wallpaper.jpg" // cloud
-			], 100);
-
-			document.getElementById( "carouselLeft" ).addEventListener( "click", function( ev )
-			{
-				// to change only one
-				carousel.previous ( ev.target, false );
+			], 100, {
+				leftId:"carouselLeft",
+				rightId:"carouselRight",
+				leftContinus:true
 			});
 
-			document.getElementById( "carouselRight" ).addEventListener( "click", function( ev )
-			{
-				// to change continus
-				if ( carousel.next ( ev.target, true ) )
-				{
-					ev.stopPropagation ( );
-				}
-			});
+	// document.getElementById( "carouselRight" ).addEventListener( "click", function( ev )
+	// {
+	// 	// to change continus
+	// 	if ( carousel.next ( ev.target, true ) )
+	// 	{
+	// 		ev.stopPropagation ( );
+	// 	}
+	// });
 
 		</script>
 	</body>

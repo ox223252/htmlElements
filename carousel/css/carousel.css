@@ -1,65 +1,69 @@
 .carousel
 {
 	display: inline-block;
-	width:600px; /* ratio 1920/1080 * 33% */
-	height:113px;
 	overflow: hidden;
 }
-.carousel .player
+.carousel .carousel_player
 {
 	height:100%;
 	white-space: nowrap;
 }
-.carousel .player img
+.carousel .carousel_player img
 {
 	display: inline-block;
 	width: calc( 100% / 3 );
 	height:100%;
 }
-.carousel .navBarre
+.carousel .carousel_navBarre
 {
-	display: flex;
 	position: relative;
-	top: -86px; /* .carousel height / 2 + 30px (3em)*/
+	top: -100%;
+	height:100%;
+	display: flex;
+	align-items: center;
 }
-.carousel .navBarre .arrow
+.carousel .carousel_navBarre > div
+{
+	width:100%;
+}
+.carousel .carousel_navBarre > div > div
 {
 	display: inline-block;
 	width: 50%;
 	font-size: 3em;
 }
-.carousel .navBarre .left
+.carousel .carousel_navBarre > div > .carousel_left
 {
 	text-align: left;
 }
-.carousel .navBarre .right
+.carousel .carousel_navBarre > div > .carousel_right
 {
 	text-align: right;
 }
-.carousel .navBarre .arrow span
+.carousel .carousel_navBarre > div > div > span
 {
 	background-color: rgba(0,0,0,0.5);
 	color: rgba(255,255,255,0.5);
 	padding: 5px;
 }
-.carousel .navBarre .arrow span:hover
+.carousel .carousel_navBarre > div > div > span:hover
 {
 	background-color: rgba(0,0,0,0.6);
 	color: rgba(255,255,255,0.8);
 	cursor: grab;
 }
-.carousel .navBarre .arrow span:active
+.carousel .carousel_navBarre > div > div > span:active
 {
 	cursor: grabbing;
 }
-.carousel .navBarre .arrow span.right
+.carousel .carousel_navBarre > div > div > span.carousel_right
 {
 	border-top-left-radius: 80% 40%;
 	border-bottom-left-radius: 80% 40%;
 	text-align: right;
 }
-.carousel .navBarre .arrow span.left
+.carousel .carousel_navBarre > div > div > span.carousel_left
 {
 	border-top-right-radius: 80% 40%;
 	border-bottom-right-radius: 80% 40%;
-}A
+}
