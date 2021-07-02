@@ -177,8 +177,18 @@ option:{
 ## grid:
 This part of code provide a mecanism to feed a grid automaticly with content defined staticly without care about alignment.
 
+### grid:
+here a tool for object with not defined size
+
 ![large nav barre](grid/imgs/3columns.png)
 ![small nav barre](grid/imgs/2columns.png)
+
+### grid 2:
+here a tool for object with difned size.
+
+![large nav barre](grid/imgs/2c_G2.png)
+![large nav barre](grid/imgs/3c_G2.png)
+![large nav barre](grid/imgs/4c_G2.png)
 
 ## dark-light :
 This part of code allow two them colors for the page.

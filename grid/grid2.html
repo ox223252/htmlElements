@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			td {
+				border: solid 1px black;
+			}
+			tr {
+				height : 100px;
+			}
+			#div_00 {background-color: rgba(0,0,0,0.5);}
+			#div_01 {background-color: rgba(0,0,0,0.1);}
+			#div_02 {background-color: rgba(0,0,0,0.1);}
+			#div_03 {background-color: rgba(0,0,0,0.1);}
+			#div_04 {background-color: rgba(0,0,0,0.1);}
+			#div_05 {background-color: rgba(0,0,0,0.1);}
+			#div_06 {background-color: rgba(0,0,0,0.1);}
+			#div_07 {background-color: rgba(0,0,0,0.1);}
+			#div_08 {background-color: rgba(0,0,0,0.1);}
+			#div_09 {background-color: rgba(0,0,0,0.1);}
+			#div_10 {background-color: rgba(0,0,0,0.1);}
+		</style>
+	</head>
+	<body id="body">
+		<nav>
+			<label for=param><img src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/params-512.png" width="40px"></label>
+		</nav>
+		<section id="mainData" >
+				<div id="div_00">div_00</div>
+				<div id="div_01">div_01</div>
+				<div id="div_02">div_02</div>
+				<div id="div_03">div_03</div>
+				<div id="div_04">div_04</div>
+				<div id="div_05">div_05</div>
+				<div id="div_06">div_06</div>
+				<div id="div_07">div_07</div>
+				<div id="div_08">div_08</div>
+				<div id="div_09">div_09</div>
+				<div id="div_10">div_10</div>
+		</section>
+	</body>
+	<script type="text/javascript" src="js/grid2.js" ></script>
+	<script type="text/javascript">
+		let config = {
+			size:150,
+			target:undefined,
+			configBox:{
+				id:"param",
+			},
+			buttons:{
+				up:{
+					// cssText:"",
+					innerHTML:"&lt;"
+				},
+				down:{
+					// cssText:"",
+					innerHTML:"&gt;"
+				}
+			},
+			dataset:[
+				{	x:1,	y:1,	el: document.getElementById( "div_00" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_01" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_02" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_03" )	},
+				{	x:3,	y:1,	el: document.getElementById( "div_04" )	},
+				{	x:1,	y:2,	el: document.getElementById( "div_05" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_06" )	},
+				{	x:2,	y:2,	el: document.getElementById( "div_07" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_08" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_09" )	},
+				{	x:1,	y:1,	el: document.getElementById( "div_10" )	},
+			]
+		}
+
+		let grid = null;
+		window.onload = ()=>{
+			grid = new Grid ( document.getElementById ( "mainData"), config );
+		}
+
+		window.onresize = ()=>{
+			grid.update ( );
+		};
+	</script>
+</html>
