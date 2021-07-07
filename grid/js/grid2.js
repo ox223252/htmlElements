@@ -84,9 +84,10 @@ class Grid {
 
 			if ( next == -1 )
 			{ // all remainning elements are larger than the remainning
-				// space in the line, we fill the current line with nothing
-				// to force creation of empty line
-				colUsed[ rowId ].length = nbCols;
+				// space in the line
+				rowId++;
+				table.appendChild ( line );
+				line = document.createElement( "tr" );
 				continue;
 			}
 
@@ -108,6 +109,9 @@ class Grid {
 			}
 		}
 
+		// get the old input if exist ( to keep it's state)
+		let oldInput = document.getElementById ( this.config.configBox.id );
+
 		while ( this.target.childNodes.length )
 		{ // clean the target
 			this.target.removeChild( this.target.childNodes[0] );
@@ -121,12 +125,20 @@ class Grid {
 			+'#'+this.config.configBox.id+' + table td > div > button {display:none}'
 			+'#'+this.config.configBox.id+':checked + table td > div > button {display:block}'
 
-			let input = document.createElement ( "input" );
-			input.id = this.config.configBox.id;
-			input.type = 'checkbox'
-
 			this.target.appendChild ( style );
-			this.target.appendChild ( input );
+
+			if ( !oldInput )
+			{
+				let input = document.createElement ( "input" );
+				input.id = this.config.configBox.id;
+				input.type = 'checkbox'
+				
+				this.target.appendChild ( input );
+			}
+			else
+			{
+				this.target.appendChild ( oldInput );
+			}
 		} 
 		this.target.appendChild ( table );
 
@@ -165,7 +177,7 @@ class Grid {
 			let bUp = document.createElement ( "button" )
 			bUp.innerHTML = this.config.buttons.up.innerHTML;
 			bUp.style.cssText = this.config.buttons.up.cssText;
-			bUp.addEventListener ( "click", (e)=>{change(e,"up")});
+			bUp.addEventListener ( "click", (e)=>{this._change(e,"up")});
 			div.appendChild ( bUp )
 		}
 
@@ -184,7 +196,7 @@ class Grid {
 			let bDown = document.createElement ( "button" )
 			bDown.innerHTML = this.config.buttons.down.innerHTML
 			bDown.style.cssText = this.config.buttons.down.cssText;
-			bDown.addEventListener ( "click", (e)=>{change(e,"down")});
+			bDown.addEventListener ( "click", (e)=>{this._change(e,"down")});
 			div.appendChild ( bDown )
 		}
 
@@ -228,16 +240,16 @@ class Grid {
 			}
 			case "down":
 			{
-				if ( index >= els.length )
+				if ( index >= this.config.dataset.length )
 				{
 					return;
 				}
-				this.config.dataset.splice ( index, 0, this.config.dataset.splice ( index, 1 ) );
+				this.config.dataset.splice ( index+1, 0, this.config.dataset.splice ( index, 1 )[0] );
 				break;
 			}
 		}
 
-		this.drawTable ( );
+		this.update ( );
 	}
 
 	_getNextCell ( index, size )
@@ -280,7 +292,7 @@ class Grid {
 		{
 			if ( isNaN( colUsed[ rowId ][ i ] ) )
 			{
-				console.log( rowId +" : "+ i )
+				console.log( nbCols +" : "+ i )
 				return false;
 			}
 		}
